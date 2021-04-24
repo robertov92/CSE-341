@@ -1,5 +1,4 @@
-// Array to store a list of users
-const userList = ['Peter', 'James', 'John'];
+const userList = ['Peter', 'James', 'John']; // Array to store a list of users
 
 const requestHandller = (req, res) => {
     const url = req.url;
