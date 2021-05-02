@@ -1,21 +1,38 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <% include ../includes/header.ejs %>
+    <% include ../includes/header.ejs %>
 </head>
 
 <body>
-  <% include ../includes/nav.ejs %>
-<div class="jumbotron text-center">
-  <div class="container">
-    <h1><%= title %></h1>
-    <p>This is the placeholder for Team Activity 02</p>
-  </div>
-</div>
-<div class="container">
-  
-</div>
+    <% include ../includes/nav.ejs %>
+        <div class="jumbotron text-center">
+            <div class="container">
+                <h1>
+                    <%= title %>
+                </h1>
+                <p>This is the placeholder for Team Activity 02</p>
+            </div>
+        </div>
+        <div class="container">
+            <form action="/ta02/addUser" method="POST"><input type="text" name="user"><button type="submit">Add</button></form>
+            <ul>
+                <% for (let user of users) {  %>
+                    <li>
+                        <%= user %>
+                            <form action="/ta02/removeUser" method="POST"><input type="hidden" name="userToDelete" value="<%= users.indexOf(user) %> "><button type="submit">Remove</button></form>
+                    </li>
+                    <% } %>
+            </ul>
+            <form action="/ta02/removeUser2" method="POST"><input type="text" name="userToDelete"><button type="submit">Delete</button></form>
+            <% if (typeof message != 'undefined') { %>
+                <%= message %>
+                    <% } %>
+
+        </div>
 
 
 </body>
+
 </html>
