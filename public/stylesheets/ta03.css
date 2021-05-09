@@ -1,0 +1,15 @@
+.container1{
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-evenly;
+   
+}
+.item {
+    width: 250px;
+    border: 1px solid gray;
+    margin: 10px 0;
+    
+}
+img{
+   width: 100%;
+}
