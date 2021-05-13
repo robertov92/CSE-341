@@ -1,0 +1,10 @@
+<%- include('includes/header.ejs') %> 
+<h1>Admin Products</h1>
+<form action="/project1/add-product" method="POST">
+   <label>Title<input type="text" name="title"></label>
+   <label>Image URL<input type="url" name="imageUrl"></label>
+   <label>Price<input type="text" name="price"></label>
+   <label>Description<input type="text" name="description"></label>
+   <input type="submit" value="Add">
+</form>
+<%- include('includes/end.ejs') %> 

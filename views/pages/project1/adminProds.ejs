@@ -1,0 +1,27 @@
+<%- include('includes/header.ejs') %> 
+<h1>Admin Products</h1>
+<a href="/project1/add-product">Add New Product</a>
+<div class="products">
+   <% for (let product of json_data) { %>
+       <article>
+           <header>
+               <h1><%= product.title %></h1>
+           </header>
+           <div>
+               <img src="<%= product.imageUrl %>"
+                   alt="<%= product.title %>">
+           </div>
+           <div>
+               <h2>$<%= product.price %></h2>
+               <p><%= product.description %></p>
+           </div>
+           <div>
+            <form action="/project1/delete-product" method="POST">
+                <input type="hidden" value="<%= product.id %>" name="productId">
+                <button class="btn" type="submit">Delete</button>
+            </form>
+           </div>
+       </article>
+   <% } %> 
+   </div>
+<%- include('includes/end.ejs') %> 

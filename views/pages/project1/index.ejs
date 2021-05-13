@@ -1,15 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    Hello project 1
-</body>
-
-</html>
+<%- include('includes/header.ejs') %> 
+<h1>Products</h1>
+<div class="products">
+<% for (let product of json_data) { %>
+    <article>
+        <header>
+            <h1><%= product.title %></h1>
+        </header>
+        <div>
+            <img src="<%= product.imageUrl %>"
+                alt="<%= product.title %>">
+        </div>
+        <div>
+            <h2>$<%= product.price %></h2>
+            <p><%= product.description %></p>
+        </div>
+    </article>
+<% } %> 
+</div>
+<%- include('includes/end.ejs') %> 
