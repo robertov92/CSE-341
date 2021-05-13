@@ -1,1 +1,23 @@
-[{"id":"1","title":"LesPaul","imageUrl":"https://media.musiciansfriend.com/is/image/MMGS7/Les-Paul-Standard-60s-Electric-Guitar-Iced-Tea/L54578000001000-00-500x500.jpg","description":"This is an awesome guitar!","price":"500"},{"id":"2","title":"Another LesPaul","imageUrl":"https://media.musiciansfriend.com/is/image/MMGS7/Les-Paul-Standard-60s-Electric-Guitar-Iced-Tea/L54578000001000-00-500x500.jpg","description":"This is awesome too!","price":"600"},{"id":"0.7362374390087683","title":"Another Product!!","imageUrl":"https://media.musiciansfriend.com/is/image/MMGS7/Les-Paul-Standard-60s-Electric-Guitar-Iced-Tea/L54578000001000-00-500x500.jpg","description":"Another test for the guitar store!","price":"999"}]
+[
+   {
+      "id": "1",
+      "title": "LesPaul",
+      "imageUrl": "https://media.musiciansfriend.com/is/image/MMGS7/Les-Paul-Standard-60s-Electric-Guitar-Iced-Tea/L54578000001000-00-500x500.jpg",
+      "description": "This is an awesome guitar!",
+      "price": "500"
+   },
+   {
+      "id": "2",
+      "title": "SG",
+      "imageUrl": "https://media.guitarcenter.com/is/image/MMGS7/SG-Standard-Electric-Guitar-Heritage-Cherry/L54573000001000-00-500x500.jpg",
+      "description": "This is awesome too!",
+      "price": "600"
+   },
+   {
+      "id": "0.7362374390087683",
+      "title": "Firebird",
+      "imageUrl": "https://www.worldofmusic.com.au/wp-content/uploads/2019/01/gibson-firebird.jpg",
+      "description": "Another test for the guitar store!",
+      "price": "999"
+   }
+]
