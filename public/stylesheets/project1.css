@@ -9,16 +9,19 @@ nav {
     background-color: black;
     padding: 10px;
 }
-nav ul{
-   display: flex;
+
+nav ul {
+    display: flex;
 }
+
 nav ul li a {
     color: white;
     text-decoration: none;
     padding: 10px;
 }
-nav ul li a:hover{
-   background-color: rgb(58, 58, 58);
+
+nav ul li a:hover {
+    background-color: rgb(58, 58, 58);
 }
 
 nav ul li {
@@ -49,4 +52,32 @@ h2,
 p,
 button {
     margin: 5px;
+}
+
+#add-product {
+    text-align: left;
+    margin: 0 auto;
+    width: 300px;
+    background-color: whitesmoke;
+    padding: 40px;
+    border-radius: 10px;
+}
+
+#add-product input,
+#add-product textarea {
+    width: 95%;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid rgb(190, 190, 190);
+    text-align: left;
+}
+
+button {
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    color: white;
+    background-color: black;
+    border: none;
+    margin: 10px;
 }

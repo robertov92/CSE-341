@@ -10,8 +10,6 @@ project1Routes.get('/add-product', controllers.getAddProduct);
 
 project1Routes.post('/add-product', controllers.postAddProduct);
 
-project1Routes.post('/delete-product', (req, res, next) => {
-    console.log("deleting");
-});
+project1Routes.post('/delete-product', controllers.postDeleteProduct);
 
 module.exports = project1Routes;

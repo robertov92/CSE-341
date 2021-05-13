@@ -3,7 +3,8 @@ const Product = require('../../models/project1/product');
 exports.getIndex = (req, res, next) => {
     Product.fetchAll(products => {
         res.render('pages/project1', {
-            json_data: products
+            json_data: products,
+            pageTitle: "Shop"
         });
     });
 };
@@ -11,13 +12,16 @@ exports.getIndex = (req, res, next) => {
 exports.getAdminProds = (req, res, next) => {
     Product.fetchAll(products => {
         res.render('pages/project1/adminProds', {
-            json_data: products
+            json_data: products,
+            pageTitle: "Admin Products"
         });
     });
 };
 
 exports.getAddProduct = (req, res, next) => {
-    res.render('pages/project1/add-product');
+    res.render('pages/project1/add-product', {
+        pageTitle: "Add Product"
+    });
 };
 
 exports.postAddProduct = (req, res, next) => {
@@ -27,5 +31,11 @@ exports.postAddProduct = (req, res, next) => {
     const description = req.body.description;
     const product = new Product(null, title, imageUrl, description, price);
     product.save();
+    res.redirect('/project1/');
+};
+
+exports.postDeleteProduct = (req, res, next) => {
+    const prodId = req.body.productId;
+    Product.deleteById(prodId);
     res.redirect('/project1/');
 };
