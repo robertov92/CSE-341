@@ -10,6 +10,8 @@ const app = express();
 const project1 = require('./routes/project1');
 const teamActivities = require('./routes/teamActivities');
 
+const User = require('./models/project1/user');
+
 app.use(express.static(path.join(__dirname, 'public')))
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
@@ -44,7 +46,18 @@ mongoose
         'mongodb+srv://roberto:Unoyuno5@cluster0.zwdeu.mongodb.net/Project1?retryWrites=true&w=majority'
     )
     .then(result => {
-
+        User.findOne().then(user => {
+            if (!user) {
+                const user = new User({
+                    name: 'roberto',
+                    email: 'roberto@test.com',
+                    cart: {
+                        items: []
+                    }
+                });
+                user.save();
+            }
+        });
         app.listen(PORT);
     })
     .catch(err => {
