@@ -1,7 +1,7 @@
 <%- include('includes/header.ejs') %> 
 <h1>Products</h1>
 <div class="products">
-<% for (let product of json_data) { %>
+<% for (let product of prods) { %>
     <article>
         <header>
             <h1><%= product.title %></h1>
@@ -13,6 +13,10 @@
         <div>
             <h2>$<%= product.price %></h2>
             <p><%= product.description %></p>
+        </div>
+        <div>
+            <a href="/project1/<%= product._id %>" class="btn">Details</a>
+            <%- include('includes/add-to-cart.ejs', {product: product}) %>
         </div>
     </article>
 <% } %> 

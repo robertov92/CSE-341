@@ -1,41 +1,114 @@
 const Product = require('../../models/project1/product');
+const Order = require('../../models/project1/order');
 
+// gets 'Shop' page
 exports.getIndex = (req, res, next) => {
-    Product.fetchAll(products => {
-        res.render('pages/project1', {
-            json_data: products,
-            pageTitle: "Shop"
+    Product.find()
+        .then(products => {
+            res.render('pages/project1', {
+                prods: products,
+                pageTitle: 'Shop'
+            });
         });
-    });
 };
 
-exports.getAdminProds = (req, res, next) => {
-    Product.fetchAll(products => {
-        res.render('pages/project1/adminProds', {
-            json_data: products,
-            pageTitle: "Admin Products"
-        });
-    });
+// gets 'Shop' page from Json
+// Product.fetchAll(products => {
+//     res.render('pages/project1', {
+//         json_data: products,
+//         pageTitle: "Shop"
+//     });
+// });
+
+// get a single product for the detail view
+exports.getProduct = (req, res, next) => {
+    const prodId = req.params.productId;
+    Product.findById(prodId)
+        .then(product => {
+            res.render('pages/project1/product-detail', {
+                product: product,
+                pageTitle: product.title
+            });
+        })
+        .catch(err => console.log(err));
 };
 
-exports.getAddProduct = (req, res, next) => {
-    res.render('pages/project1/add-product', {
-        pageTitle: "Add Product"
-    });
+// gets card page
+exports.getCart = (req, res, next) => {
+    req.user
+        .populate('cart.items.productId')
+        .execPopulate()
+        .then(user => {
+            const products = user.cart.items;
+            res.render('pages/project1/cart', {
+                pageTitle: 'Your Cart',
+                products: products
+            });
+        })
+        .catch(err => console.log(err));
 };
 
-exports.postAddProduct = (req, res, next) => {
-    const title = req.body.title;
-    const imageUrl = req.body.imageUrl;
-    const price = req.body.price;
-    const description = req.body.description;
-    const product = new Product(null, title, imageUrl, description, price);
-    product.save();
-    res.redirect('/project1/');
-};
-
-exports.postDeleteProduct = (req, res, next) => {
+// adds product to cart
+exports.postCart = (req, res, next) => {
     const prodId = req.body.productId;
-    Product.deleteById(prodId);
-    res.redirect('/project1/');
+    Product.findById(prodId)
+        .then(product => {
+            return req.user.addToCart(product);
+        })
+        .then(result => {
+            res.redirect('/project1/cart');
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+// deletes product from cart
+exports.postCartDeleteProduct = (req, res, next) => {
+    const prodId = req.body.productId;
+    req.user
+        .removeFromCart(prodId)
+        .then(result => {
+            res.redirect('/project1/cart');
+        })
+        .catch(err => console.log(err));
+};
+
+// saves cart into order collection
+exports.postOrder = (req, res, next) => {
+    req.user
+        .populate('cart.items.productId')
+        .execPopulate()
+        .then(user => {
+            const products = user.cart.items.map(i => {
+                return { quantity: i.quantity, product: {...i.productId._doc } };
+            });
+            const order = new Order({
+                user: {
+                    name: req.user.name,
+                    userId: req.user
+                },
+                products: products
+            });
+            return order.save();
+        })
+        .then(result => {
+            return req.user.clearCart();
+        })
+        .then(() => {
+            res.redirect('/project1/orders');
+        })
+        .catch(err => console.log(err));
+};
+
+// gets orders to be displayed
+exports.getOrders = (req, res, next) => {
+    Order.find({ 'user.userId': req.user._id })
+        .then(orders => {
+            res.render('pages/project1/orders', {
+                pageTitle: 'Your Orders',
+                orders: orders
+            });
+        })
+        .catch(err => console.log(err));
 };

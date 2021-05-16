@@ -12,6 +12,15 @@ const teamActivities = require('./routes/teamActivities');
 
 const User = require('./models/project1/user');
 
+app.use((req, res, next) => {
+    User.findById('60a0553aadd4910004c7f31d')
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(err => console.log(err));
+});
+
 app.use(express.static(path.join(__dirname, 'public')))
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
