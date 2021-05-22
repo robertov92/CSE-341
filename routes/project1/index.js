@@ -1,8 +1,11 @@
 const project1Routes = require('express').Router();
 const shopControllers = require('../../controllers/project1/index');
 const adminControllers = require('../../controllers/project1/admin');
+const authControllers = require('../../controllers/project1/auth');
 
-
+// auth 
+project1Routes.get('/login', authControllers.getLogin);
+project1Routes.post('/login', authControllers.postLogin);
 
 // admin contorller operations
 project1Routes.get('/edit-product/:productId', adminControllers.getEditProduct);

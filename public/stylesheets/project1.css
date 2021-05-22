@@ -8,6 +8,8 @@
 nav {
     background-color: black;
     padding: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
 nav ul {

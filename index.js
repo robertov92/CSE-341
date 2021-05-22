@@ -3,9 +3,16 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const PORT = process.env.PORT || 5000;
 
+const MONGODB_URI = 'mongodb+srv://roberto:Unoyuno5@cluster0.zwdeu.mongodb.net/Project1?retryWrites=true&w=majority';
+
 const app = express();
+const store = new MongoDBStore({uri: MONGODB_URI, collection: 'sessions'});
+
+app.use(session({ secret: 'my secret', resave: false, saveUninitialized: false , store: store}));
 
 const project1 = require('./routes/project1');
 const teamActivities = require('./routes/teamActivities');
@@ -35,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')))
     });
 
 const corsOptions = {
-    origin: "https://<your_app_name>.herokuapp.com/",
+    origin: "https://cse-341-roberto-villanueva.herokuapp.com/",
     optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
@@ -48,11 +55,9 @@ const options = {
     family: 4
 };
 
-const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://roberto:Unoyuno5@cluster0.zwdeu.mongodb.net/Project1?retryWrites=true&w=majority";
-
 mongoose
     .connect(
-        'mongodb+srv://roberto:Unoyuno5@cluster0.zwdeu.mongodb.net/Project1?retryWrites=true&w=majority'
+        MONGODB_URI
     )
     .then(result => {
         User.findOne().then(user => {
