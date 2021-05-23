@@ -12,6 +12,8 @@
         "prove01": "nodemon prove01.js"
     },
     "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "connect-flash": "^0.1.1",
         "connect-mongodb-session": "^2.4.1",
         "cors": "^2.8.5",
         "ejs": "^2.5.6",

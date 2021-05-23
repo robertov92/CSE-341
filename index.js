@@ -5,14 +5,21 @@ const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const flash = require('connect-flash');
 const PORT = process.env.PORT || 5000;
 
 const MONGODB_URI = 'mongodb+srv://roberto:Unoyuno5@cluster0.zwdeu.mongodb.net/Project1?retryWrites=true&w=majority';
 
 const app = express();
-const store = new MongoDBStore({uri: MONGODB_URI, collection: 'sessions'});
+const store = new MongoDBStore({ uri: MONGODB_URI, collection: 'sessions' });
 
-app.use(session({ secret: 'my secret', resave: false, saveUninitialized: false , store: store}));
+app.use(session({ secret: 'my secret', resave: false, saveUninitialized: false, store: store }));
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    next();
+});
 
 const project1 = require('./routes/project1');
 const teamActivities = require('./routes/teamActivities');
@@ -20,7 +27,10 @@ const teamActivities = require('./routes/teamActivities');
 const User = require('./models/project1/user');
 
 app.use((req, res, next) => {
-    User.findById('60a0553aadd4910004c7f31d')
+    if (!req.session.user) {
+        return next();
+    }
+    User.findById(req.session.user._id)
         .then(user => {
             req.user = user;
             next();
@@ -60,18 +70,6 @@ mongoose
         MONGODB_URI
     )
     .then(result => {
-        User.findOne().then(user => {
-            if (!user) {
-                const user = new User({
-                    name: 'roberto',
-                    email: 'roberto@test.com',
-                    cart: {
-                        items: []
-                    }
-                });
-                user.save();
-            }
-        });
         app.listen(PORT);
     })
     .catch(err => {
