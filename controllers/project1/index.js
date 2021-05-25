@@ -12,14 +12,6 @@ exports.getIndex = (req, res, next) => {
         });
 };
 
-// gets 'Shop' page from Json
-// Product.fetchAll(products => {
-//     res.render('pages/project1', {
-//         json_data: products,
-//         pageTitle: "Shop"
-//     });
-// });
-
 // get a single product for the detail view
 exports.getProduct = (req, res, next) => {
     const prodId = req.params.productId;

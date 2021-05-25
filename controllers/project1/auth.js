@@ -27,7 +27,7 @@ exports.postSignup = (req, res, next) => {
                     });
                     return user.save();
                 })
-                .then(result => {
+                .then(() => {
                     res.redirect('/project1/login')
                 });
         })

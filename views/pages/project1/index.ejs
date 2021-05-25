@@ -14,8 +14,8 @@
             <h2>$<%= product.price %></h2>
             <p><%= product.description %></p>
         </div>
-        <div>
-            <a href="/project1/<%= product._id %>">Details</a>
+        <div class="prod_actions">
+            <a class="btn" href="/project1/<%= product._id %>">Details</a>
             <%- include('includes/add-to-cart.ejs', {product: product}) %>
         </div>
     </article>

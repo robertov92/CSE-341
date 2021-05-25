@@ -12,16 +12,6 @@ exports.getAdminProds = (req, res, next) => {
         .catch(err => console.log(err));
 };
 
-// gets products (from JSON) to show in the 'Admin Products' page
-// exports.getAdminProds = (req, res, next) => {
-//    Product.fetchAll(products => {
-//        res.render('pages/project1/adminProds', {
-//            json_data: products,
-//            pageTitle: "Admin Products"
-//        });
-//    });
-// };
-
 // gets 'Add Product' page
 exports.getAddProduct = (req, res, next) => {
     res.render('pages/project1/add-product', {
@@ -53,17 +43,6 @@ exports.postAddProduct = (req, res, next) => {
         });
 };
 
-// adds a product (using JSON)
-// exports.postAddProduct = (req, res, next) => {
-//     const title = req.body.title;
-//     const imageUrl = req.body.imageUrl;
-//     const price = req.body.price;
-//     const description = req.body.description;
-//     const product = new Product(null, title, imageUrl, description, price);
-//     product.save();
-//     res.redirect('/project1/');
-// };
-
 // deletes a product from database
 exports.postDeleteProduct = (req, res, next) => {
     const prodId = req.body.productId;
@@ -73,13 +52,6 @@ exports.postDeleteProduct = (req, res, next) => {
         })
         .catch(err => console.log(err));
 };
-
-// deletes product from JSON
-// exports.postDeleteProduct = (req, res, next) => {
-//    const prodId = req.body.productId;
-//    Product.deleteById(prodId);
-//    res.redirect('/project1/');
-// };
 
 // gets and populates edit page (which is also the add page)
 exports.getEditProduct = (req, res, next) => {
