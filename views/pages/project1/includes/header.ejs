@@ -15,24 +15,25 @@
     <header>
         <nav>
             <ul>
-                <li><a href="/project1">Shop</a></li>
-                <% if (isAuthenticated) { %>
-                <li><a href="/project1/cart">Cart</a></li>
-                <li><a href="/project1/orders">Orders</a></li>
-                <li><a href="/project1/adminProds">Admin Products</a></li>
-                <% } %>
-
+                <li><a id="logo-text" href="/project1">Guitar+</a></li>
+                <li><a href="/project1/catalog">Catalog</a></li>
             </ul>
             <ul>
+                <% if (isAuthenticated) { %>
+                
+                <li><a href="/project1/cart">Cart [<%= cartItems %>] </a></li>
+                    <li><a href="/project1/orders">Orders</a></li>
+                    <li><a href="/project1/adminProds">Admin</a></li>
+                <% } %>
                 <% if (!isAuthenticated) { %>
-                <li><a href="/project1/login">Login</a></li>
-                <li><a href="/project1/signup">Signup</a></li>
+                    <li><a href="/project1/login">Login</a></li>
+                    <li><a href="/project1/signup">Signup</a></li>
                 <% } else { %>
-                <li>
-                    <form action="/project1/logout" method="POST">
-                        <button id="logout_btn" type="submit">Logout</button>
-                    </form>
-                </li>
+                    <li>
+                        <form action="/project1/logout" method="POST">
+                            <button id="logout_btn" type="submit">Logout</button>
+                        </form>
+                    </li>
                 <% } %>
             </ul>
         </nav>

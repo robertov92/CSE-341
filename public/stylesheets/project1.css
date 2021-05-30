@@ -1,8 +1,54 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300&display=swap');
 * {
     margin: 0;
     text-align: center;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Mulish', sans-serif;
+}
+
+body {
+    background-color: rgb(14, 14, 14);
+    color: white;
+}
+
+#hero-img {
+    min-height: 93vh;
+    background: url(../images/guitars.jpg);
+    background-size: cover;
+    display: flex;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 20px;
+    text-shadow: 2px 2px 4px rgb(31, 31, 31);
+}
+
+#hero-img h1 {
+    font-size: 60px;
+    letter-spacing: 5px;
+    text-shadow: 2px 2px 4px rgb(31, 31, 31);
+}
+
+#hero-img button {
+    margin: 20px;
+    padding: 5px 20px;
+}
+
+#hero-img button a {
+    text-decoration: none;
+    color: white;
+}
+
+#hero-img button:hover a {
+    color: black;
+}
+
+#logo-text {
+    font-size: 2rem;
+}
+
+#logo-text:hover {
+    background: black;
 }
 
 nav {
@@ -10,10 +56,12 @@ nav {
     padding: 10px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 nav ul {
     display: flex;
+    align-items: center;
 }
 
 nav ul li a {
@@ -38,11 +86,12 @@ nav ul li {
 }
 
 article {
-    max-width: 300px;
-    border: 1px solid rgb(204, 204, 204);
+    width: 300px;
+    border: 1px solid rgb(31, 31, 31);
     border-radius: 5px;
-    box-shadow: 5px 10px 10px rgb(211, 211, 211);
-    margin: 10px;
+    margin: 20px;
+    background-color: rgb(58, 58, 58);
+    transition: .5s;
 }
 
 img {
@@ -61,15 +110,17 @@ button {
     text-align: left;
     margin: 0 auto;
     width: 300px;
-    background-color: whitesmoke;
+    background-color: rgb(58, 58, 58);
     padding: 40px;
     border-radius: 10px;
+    transition: .5s;
 }
 
 #add-product input,
 #add-product textarea,
 .login_signup input {
     width: 95%;
+    padding: 10px;
     margin-bottom: 15px;
     border-radius: 5px;
     border: 1px solid rgb(190, 190, 190);
@@ -92,19 +143,61 @@ button {
 
 .cart_item,
 .order {
-    background-color: whitesmoke;
+    background-color: rgb(58, 58, 58);
+    color: white;
     list-style: none;
     border-radius: 5px;
-    margin: 30px 35px 30px 0;
+    margin: 30px auto;
     padding: 10px;
+    max-width: 800px;
+    transition: .5s;
+}
+
+#all-in-cart,
+#all-orders {
+    margin: 30px 0;
+    list-style-type: none;
+    padding-inline: 0;
+}
+
+.cart_item {
+    display: flex;
+}
+
+.cart-item-details {
+    margin-top: 18px;
+}
+
+.cart-item-details h2,
+.cart-item-details h1,
+.cart-item-details form {
+    text-align: left;
+}
+
+.cart-img {
+    max-width: 150px;
+    margin: 30px;
+}
+
+#order-now-btn {
+    text-align: left;
+    max-width: 830px;
+    margin: 30px auto 100px;
+}
+
+#order-now-btn button {
+    width: 150px;
+    height: 50px;
 }
 
 .order_item {
     list-style: none;
 }
 
-.img_detail {
-    max-width: 700px;
+#all-orders h1,
+#all-orders li {
+    font-size: 20px;
+    text-align: left;
 }
 
 .btn {
@@ -112,16 +205,51 @@ button {
     padding: 0.2rem 1rem;
     text-decoration: none;
     font: inherit;
-    border: 1px solid #000000;
-    color: white;
-    background: black;
     border-radius: 3px;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin: 10px;
+    transition: .5s;
+    color: white;
+    background: rgb(31, 31, 31);
+    border: 1px solid rgb(31, 31, 31);
 }
 
 .btn:hover,
 .btn:active {
     background-color: white;
-    color: black;
+    color: rgb(31, 31, 31);
+}
+
+#details {
+    display: grid;
+    grid-gap: 1%;
+    grid-template-columns: 1fr 1fr;
+    margin: 50px auto;
+}
+
+#dt h1,
+#dt h2,
+#dt p,
+#dt form {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+#dt {
+    max-width: 700px;
+    padding: 0 30px;
+}
+
+.img_detail {
+    max-width: 700px;
+}
+
+.image {
+    padding: 0 30px;
+}
+
+@media (max-width:850px) {
+    #details {
+        grid-template-columns: 1fr;
+    }
 }

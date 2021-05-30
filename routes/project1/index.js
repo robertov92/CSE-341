@@ -4,12 +4,19 @@ const adminControllers = require('../../controllers/project1/admin');
 const authControllers = require('../../controllers/project1/auth');
 const isAuth = require('../../middleware/is-auth');
 
+
+
 // auth 
+project1Routes.get('/reset/:token', authControllers.getNewPassword);
+project1Routes.post('/new-password', authControllers.postNewPassword);
 project1Routes.get('/signup', authControllers.getSignup);
 project1Routes.post('/signup', authControllers.postSignup);
 project1Routes.get('/login', authControllers.getLogin);
 project1Routes.post('/login', authControllers.postLogin);
 project1Routes.post('/logout', authControllers.postLogout);
+project1Routes.get('/reset', authControllers.getReset);
+project1Routes.post('/reset', authControllers.postReset);
+
 
 
 // admin contorller operations
@@ -22,6 +29,7 @@ project1Routes.post('/delete-product', isAuth, adminControllers.postDeleteProduc
 
 
 // shop controller operations
+project1Routes.get('/catalog', shopControllers.getCatalog);
 project1Routes.get('/cart', isAuth, shopControllers.getCart);
 project1Routes.post('/cart', isAuth, shopControllers.postCart);
 project1Routes.post('/cart-delete-item', shopControllers.postCartDeleteProduct);

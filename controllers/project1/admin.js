@@ -2,7 +2,7 @@ const Product = require('../../models/project1/product');
 
 // gets products to show in the 'Admin Products' page
 exports.getAdminProds = (req, res, next) => {
-    Product.find()
+    Product.find({ userId: req.user._id })
         .then(products => {
             res.render('pages/project1/adminProds', {
                 prods: products,
@@ -46,7 +46,7 @@ exports.postAddProduct = (req, res, next) => {
 // deletes a product from database
 exports.postDeleteProduct = (req, res, next) => {
     const prodId = req.body.productId;
-    Product.findByIdAndRemove(prodId)
+    Product.deleteOne({ _id: prodId, userId: req.user._id })
         .then(() => {
             res.redirect('/project1/adminProds');
         })
@@ -84,14 +84,17 @@ exports.postEditProduct = (req, res, next) => {
 
     Product.findById(prodId)
         .then(product => {
+            if (product.userId.toString() !== req.user._id.toString()) {
+                return res.redirect('/project1/');
+            }
             product.title = updatedTitle;
             product.price = updatedPrice;
             product.description = updatedDesc;
             product.imageUrl = updatedImageUrl;
-            return product.save();
+            return product.save().then(() => {
+                res.redirect('/project1/adminProds');
+            });
         })
-        .then(() => {
-            res.redirect('/project1/adminProds');
-        })
-        .catch(err => console.log(err));
+
+    .catch(err => console.log(err));
 };

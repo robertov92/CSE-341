@@ -1,22 +1,30 @@
 <%- include('includes/header.ejs') %>
 <% if (products.length > 0) { %>
-    <ul>
+    <h1>Products in Your Cart</h1>
+    <ul id="all-in-cart">
         <% products.forEach(p => { %>
             <li class="cart_item">
-                <h1><%= p.productId.title %></h1>
-                <h2>Quantity: <%= p.quantity %></h2>
-                <form action="/project1/cart-delete-item" method="POST">
-                    <input type="hidden" value="<%= p.productId._id %>" name="productId">
-                    <button class="btn" type="submit">Delete</button>
-                </form>
+                <img class="cart-img" src="<%= p.productId.imageUrl%>" alt="<%= p.productId.title %>">
+                <div class="cart-item-details">
+                    <h1><%= p.productId.title %></h1>
+                    <h2>Quantity: <%= p.quantity %></h2>
+                    <form action="/project1/cart-delete-item" method="POST">
+                        <input type="hidden" value="<%= p.productId._id %>" name="productId">
+                        <button class="btn" type="submit">Delete</button>
+                    </form>
+                </div>
+                
+                
+                
             </li>
         <% }) %>
+        <div>
+            <form id="order-now-btn" action="/project1/create-order" method="POST">
+                <button  type="submit" class="btn">Order Now!</button>
+            </form>
+        </div>
     </ul>
-    <div>
-        <form action="/project1/create-order" method="POST">
-            <button type="submit" class="btn">Order Now!</button>
-        </form>
-    </div>
+    
     
 <% } else { %>
     <h1>No Products in Cart!</h1>

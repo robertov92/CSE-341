@@ -1,0 +1,13 @@
+<%- include('includes/header.ejs') %>
+<h1>Reset Password</h1>
+<form class="login_signup" action="/project1/reset" method="POST">
+   <% if (errorMessage) { %> 
+      <div>
+         <%= errorMessage %> 
+      </div>
+   <% } %> 
+   <label>Email<br><input type="email" name="email"></label><br>
+   <button class="btn" type="submit">Reset Password</button>
+</form>
+<%- include('includes/end.ejs') %> 
+

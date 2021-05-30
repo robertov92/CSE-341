@@ -1,0 +1,27 @@
+<%- include('includes/header.ejs') %>
+    <div id="prods">
+        <div class="products">
+            <% for (let product of prods) { %>
+                <article>
+                    <header>
+                        <h1>
+                            <%= product.title %>
+                        </h1>
+                    </header>
+                    <div>
+                        <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+                    </div>
+                    <div>
+                        <h2>$
+                            <%= product.price %>
+                        </h2>
+                    </div>
+                    <div class="prod_actions">
+                        <a class="btn" href="/project1/<%= product._id %>">Details</a>
+                        <%- include('includes/add-to-cart.ejs', {product: product}) %>
+                    </div>
+                </article>
+                <% } %>
+        </div>
+    </div>
+    <%- include('includes/end.ejs') %>

@@ -1,24 +1,10 @@
-<%- include('includes/header.ejs') %> 
-<h1>Products</h1>
-<div class="products">
-<% for (let product of prods) { %>
-    <article>
-        <header>
-            <h1><%= product.title %></h1>
-        </header>
-        <div>
-            <img src="<%= product.imageUrl %>"
-                alt="<%= product.title %>">
+<%- include('includes/header.ejs') %>
+    <div id="hero-img">
+        <h1>Welcome to Guitar+</h1>
+        <p>Guitars and accessories</p>
+        <div class="hero-btns">
+            <button class="btn"><a href="/project1/catalog">See catalog</a></button>
+            <button class="btn"><a href="/project1/signup">Sign-up</a></button>
         </div>
-        <div>
-            <h2>$<%= product.price %></h2>
-            <p><%= product.description %></p>
-        </div>
-        <div class="prod_actions">
-            <a class="btn" href="/project1/<%= product._id %>">Details</a>
-            <%- include('includes/add-to-cart.ejs', {product: product}) %>
-        </div>
-    </article>
-<% } %> 
-</div>
-<%- include('includes/end.ejs') %> 
+    </div>
+    <%- include('includes/end.ejs') %>

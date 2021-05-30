@@ -1,9 +1,17 @@
 <%- include('includes/header.ejs') %>
-<h1><%= product.title %></h1>
-<div class="image">
-    <img class="img_detail" src="<%= product.imageUrl %>" alt="<%= product.title %>">
+
+<div id="details">
+    <div class="image">
+        <img class="img_detail" src="<%= product.imageUrl %>" alt="<%= product.title %>">
+    </div>
+    <div id="dt">
+        <h1><%= product.title %></h1>
+        <h2>$<%= product.price %></h2>
+        <p><%= product.description %></p>
+        <%- include('includes/add-to-cart.ejs') %>
+    </div>
+
 </div>
-<h2>$<%= product.price %></h2>
-<p><%= product.description %></p>
-<%- include('includes/add-to-cart.ejs') %>
+
+
 <%- include('includes/end.ejs') %> 

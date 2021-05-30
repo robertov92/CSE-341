@@ -7,9 +7,21 @@ exports.getIndex = (req, res, next) => {
         .then(products => {
             res.render('pages/project1', {
                 prods: products,
-                pageTitle: 'Shop'
+                pageTitle: 'GuitarJS'
             });
         });
+};
+
+// gets 'Shop' page
+exports.getCatalog = (req, res, next) => {
+    Product.find()
+        .then(products => {
+            res.render('pages/project1/catalog', {
+                prods: products,
+                pageTitle: 'Catalog'
+            });
+        });
+
 };
 
 // get a single product for the detail view

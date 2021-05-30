@@ -3,7 +3,8 @@
 <% if (orders.length <= 0) { %>
     <h1>Nothing there!</h1>
 <% } else { %>
-    <ul>
+    <h1>Yout Past Orders</h1>
+    <ul id="all-orders">
         <% orders.forEach(order => { %>
             <li class="order">
                 <h1>Order - # <%= order._id %></h1>

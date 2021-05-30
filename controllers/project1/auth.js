@@ -1,6 +1,16 @@
+const crypto = require('crypto');
+
 const bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
 
 const User = require('../../models/project1/user');
+
+const transporter = nodemailer.createTransport(sendgridTransport({
+    auth: {
+        api_key: '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'
+    }
+}));
 
 exports.getSignup = (req, res, next) => {
     res.render('pages/project1/signup', {
@@ -28,7 +38,17 @@ exports.postSignup = (req, res, next) => {
                     return user.save();
                 })
                 .then(() => {
-                    res.redirect('/project1/login')
+                    res.redirect('/project1/login');
+
+                    return transporter.sendMail({
+                        to: email,
+                        from: 'vil13004@byui.edu',
+                        subject: 'Signup succeeded',
+                        html: '<h1>Success!</h1>'
+                    });
+
+                }).catch(err => {
+                    console.log(err);
                 });
         })
         .catch(err => {
@@ -78,4 +98,95 @@ exports.postLogout = (req, res, next) => {
     req.session.destroy(() => {
         res.redirect('/project1/');
     });
+};
+
+exports.getReset = (req, res, next) => {
+    res.render('pages/project1/reset', {
+        pageTitle: 'Reset Password',
+        errorMessage: req.flash('error')
+    });
+}
+
+exports.postReset = (req, res, next) => {
+    crypto.randomBytes(32, (err, buffer) => {
+        if (err) {
+            console.log(err);
+            return res.redirect('/project1/reset');
+        }
+        const token = buffer.toString('hex');
+        User.findOne({ email: req.body.email }).then(user => {
+                if (!user) {
+                    req.flash('error', 'No account with that email found');
+                    return res.redirect('/project1/reset');
+                }
+
+                // user.resetTokenExpiration = Date.now() + 3600000; // expiration not being saved at the moment
+                user.resetToken = token;
+                return user.save();
+            })
+            .then(result => {
+                res.redirect('/project1/');
+                transporter.sendMail({
+                    to: req.body.email,
+                    from: 'vil13004@byui.edu',
+                    subject: 'Password reset',
+                    html: `
+                    <p>You requested a password reset!</p>
+                    <p>Click this <a href="https://cse-341-roberto-villanueva.herokuapp.com/project1/reset${token}">link</a> to set a new password</p>
+                    `
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    });
+}
+
+exports.getNewPassword = (req, res, next) => {
+    const token = req.params.token;
+    User.findOne({ resetToken: token })
+        .then(user => {
+            res.render('pages/project1/new-password', {
+                pageTitle: 'New Password',
+                errorMessage: req.flash('error'),
+                userId: user.id.toString(),
+                passwordToken: token
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+
+}
+
+exports.postNewPassword = (req, res, next) => {
+    const newPassword = req.body.password;
+    const userId = req.body.userId;
+    const passwordToken = req.body.passwordToken;
+    let resetUser;
+
+    // userId and passwordToken are passed correctly but the findOne function is not finding the user
+    console.log(passwordToken);
+    console.log(userId);
+
+    User.findOne({
+            resetToken: passwordToken //,
+                //_id: userId
+        })
+        .then(user => {
+            resetUser = user;
+            return bcrypt.hash(newPassword, 12);
+        })
+        .then(hashedPassword => {
+            resetUser.password = hashedPassword;
+            resetUser.resetToken = undefined;
+            resetUser.resetTokenExpiration = undefined;
+            return resetUser.save();
+        })
+        .then(result => {
+            res.redirect('/project1/');
+        })
+        .catch(err => {
+            console.log(err);
+        });
 };
