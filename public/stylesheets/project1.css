@@ -248,6 +248,11 @@ button {
     padding: 0 30px;
 }
 
+#resetP {
+    color: white;
+    margin: 15px;
+}
+
 @media (max-width:850px) {
     #details {
         grid-template-columns: 1fr;
