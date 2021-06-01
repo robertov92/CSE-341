@@ -4,6 +4,7 @@ const shopControllers = require('../../controllers/project1');
 const adminControllers = require('../../controllers/project1/admin');
 const authControllers = require('../../controllers/project1/auth');
 const isAuth = require('../../middleware/is-auth');
+const alreadyLogedIn = require('../../middleware/alreadyLogedIn');
 const User = require('../../models/project1/user');
 
 
@@ -12,7 +13,7 @@ const User = require('../../models/project1/user');
 // auth 
 project1Routes.get('/reset/:token', authControllers.getNewPassword);
 project1Routes.post('/new-password', authControllers.postNewPassword);
-project1Routes.get('/signup', authControllers.getSignup);
+project1Routes.get('/signup', alreadyLogedIn, authControllers.getSignup);
 project1Routes.post('/signup', [check('email')
     .isEmail().withMessage('Please enter a valid email')
     .custom((value, { req }) => {
@@ -31,7 +32,7 @@ project1Routes.post('/signup', [check('email')
         return true;
     })
 ], authControllers.postSignup);
-project1Routes.get('/login', authControllers.getLogin);
+project1Routes.get('/login', alreadyLogedIn, authControllers.getLogin);
 project1Routes.post('/login', [
     body('email').isEmail().withMessage('Please enter a valid email'),
     body('password', 'Please enter a password with only numbers and text, and at least 4 characters long').isLength({ min: 4 }).isAlphanumeric()
@@ -66,7 +67,7 @@ project1Routes.post('/delete-product', isAuth, adminControllers.postDeleteProduc
 project1Routes.get('/catalog', shopControllers.getCatalog);
 project1Routes.get('/cart', isAuth, shopControllers.getCart);
 project1Routes.post('/cart', isAuth, shopControllers.postCart);
-project1Routes.post('/cart-delete-item', shopControllers.postCartDeleteProduct);
+project1Routes.post('/cart-delete-item', isAuth, shopControllers.postCartDeleteProduct);
 project1Routes.post('/create-order', isAuth, shopControllers.postOrder);
 project1Routes.get('/orders', isAuth, shopControllers.getOrders);
 project1Routes.get('/catalog/:productId', shopControllers.getProduct);

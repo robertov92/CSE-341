@@ -4,7 +4,12 @@
         <p>Guitars and accessories</p>
         <div class="hero-btns">
             <button class="btn"><a href="/project1/catalog">See catalog</a></button>
-            <button class="btn"><a href="/project1/signup">Sign-up</a></button>
+            <% if (isAuthenticated) { %>
+                <button class="btn"><a href="/project1/adminProds">Product Admin</a></button>
+            <% } else { %>
+                <button class="btn"><a href="/project1/signup">Sign-up</a></button>
+            <% } %>
+            
         </div>
     </div>
     <%- include('includes/end.ejs') %>

@@ -1,6 +1,9 @@
 <%- include('includes/header.ejs') %> 
 <h1>Your Products</h1>
-<a class="btn" href="/project1/add-product">Add New Product</a>
+<div id="addprodbtn">
+    <a class="btn" href="/project1/add-product">Add New Product</a>
+</div>
+
 <div class="products">
    <% for (let product of prods) { %>
        <article>
