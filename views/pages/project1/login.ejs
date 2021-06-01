@@ -6,8 +6,8 @@
          <%= errorMessage %> 
       </div>
    <% } %> 
-   <label>Email<br><input type="email" name="email"></label><br>
-   <label>Password<br><input type="password" name="password"></label><br>
+   <label>Email<br><input type="email" name="email" value="<%= oldInput.email %>" class="<%= validationErrors.find(e=>e.param === 'email') ? 'invalid' : '' %>" ></label><br>
+   <label>Password<br><input type="password" name="password" value="<%= oldInput.password %>" class="<%= validationErrors.find(e=>e.param === 'password') ? 'invalid' : '' %>" ></label><br>
    <button class="btn" type="submit">Login</button>
    <a id="resetP" href="/project1/reset">Reset Password</a>
 </form>

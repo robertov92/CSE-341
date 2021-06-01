@@ -16,7 +16,9 @@ const transporter = nodemailer.createTransport(sendgridTransport({
 exports.getSignup = (req, res, next) => {
     res.render('pages/project1/signup', {
         pageTitle: 'Sign-up',
-        errorMessage: req.flash('error')
+        errorMessage: req.flash('error'),
+        oldInput: { email: '', password: "", confirmPassword: "" },
+        validationErrors: []
     });
 };
 
@@ -27,7 +29,13 @@ exports.postSignup = (req, res, next) => {
     if (!errors.isEmpty()) {
         return res.status(422).render('pages/project1/signup', {
             pageTitle: 'Sign-up',
-            errorMessage: errors.array()[0].msg
+            errorMessage: errors.array()[0].msg,
+            oldInput: {
+                email: email,
+                password: password,
+                confirmPassword: req.body.confirmPassword
+            },
+            validationErrors: errors.array()
         });
     }
     bcrypt.hash(password, 12)
@@ -57,7 +65,9 @@ exports.postSignup = (req, res, next) => {
 exports.getLogin = (req, res, next) => {
     res.render('pages/project1/login', {
         pageTitle: 'Login',
-        errorMessage: req.flash('error')
+        errorMessage: req.flash('error'),
+        oldInput: { email: '', password: '' },
+        validationErrors: []
     });
 };
 
@@ -66,16 +76,22 @@ exports.postLogin = (req, res, next) => {
     const password = req.body.password;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.render('pages/project1/login', {
+        return res.status(422).render('pages/project1/login', {
             pageTitle: 'Login',
-            errorMessage: errors.array()[0].msg
+            errorMessage: errors.array()[0].msg,
+            oldInput: { email: email, password: password },
+            validationErrors: errors.array()
         });
     }
     User.findOne({ email: email })
         .then(user => {
             if (!user) {
-                req.flash('error', 'Invalid email'); // error messages for email
-                return res.redirect('/project1/login');
+                return res.status(422).render('pages/project1/login', {
+                    pageTitle: 'Login',
+                    errorMessage: 'Invalid email',
+                    oldInput: { email: email, password: password },
+                    validationErrors: []
+                });
             }
             bcrypt.compare(password, user.password)
                 .then(doMatch => {
@@ -88,8 +104,12 @@ exports.postLogin = (req, res, next) => {
                             res.redirect('/project1');
                         });
                     }
-                    req.flash('error', 'Invalid password'); // error messages for password
-                    res.redirect('/project1/login');
+                    return res.status(422).render('pages/project1/login', {
+                        pageTitle: 'Login',
+                        errorMessage: 'Invalid email',
+                        oldInput: { email: email, password: password },
+                        validationErrors: []
+                    });
                 })
                 .catch(err => {
                     console.log(err);
