@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
+const { validationResult } = require('express-validator/check');
 
 const User = require('../../models/project1/user');
 
@@ -22,37 +23,34 @@ exports.getSignup = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
-    User.findOne({ email: email })
-        .then(userDoc => {
-            if (userDoc) {
-                req.flash('error', 'Email already exists'); // error messages for email
-                return res.redirect('/project1/signup')
-            }
-            return bcrypt.hash(password, 12)
-                .then(hashedPassword => {
-                    const user = new User({
-                        email: email,
-                        password: hashedPassword,
-                        cart: { items: [] }
-                    });
-                    return user.save();
-                })
-                .then(() => {
-                    res.redirect('/project1/login');
-
-                    return transporter.sendMail({
-                        to: email,
-                        from: 'vil13004@byui.edu',
-                        subject: 'Signup succeeded',
-                        html: '<h1>Success!</h1>'
-                    });
-
-                }).catch(err => {
-                    console.log(err);
-                });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).render('pages/project1/signup', {
+            pageTitle: 'Sign-up',
+            errorMessage: errors.array()[0].msg
+        });
+    }
+    bcrypt.hash(password, 12)
+        .then(hashedPassword => {
+            const user = new User({
+                email: email,
+                password: hashedPassword,
+                cart: { items: [] }
+            });
+            return user.save();
         })
-        .catch(err => {
-            console.log(err)
+        .then(() => {
+            res.redirect('/project1/login');
+
+            return transporter.sendMail({
+                to: email,
+                from: 'vil13004@byui.edu',
+                subject: 'Signup succeeded',
+                html: '<h1>Success!</h1>'
+            });
+
+        }).catch(err => {
+            console.log(err);
         });
 };
 
@@ -66,6 +64,13 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.render('pages/project1/login', {
+            pageTitle: 'Login',
+            errorMessage: errors.array()[0].msg
+        });
+    }
     User.findOne({ email: email })
         .then(user => {
             if (!user) {

@@ -1,8 +1,12 @@
 const project1Routes = require('express').Router();
+const { check, body } = require('express-validator/check');
+
 const shopControllers = require('../../controllers/project1');
 const adminControllers = require('../../controllers/project1/admin');
 const authControllers = require('../../controllers/project1/auth');
 const isAuth = require('../../middleware/is-auth');
+
+const User = require('../../models/project1/user');
 
 
 
@@ -10,9 +14,29 @@ const isAuth = require('../../middleware/is-auth');
 project1Routes.get('/reset/:token', authControllers.getNewPassword);
 project1Routes.post('/new-password', authControllers.postNewPassword);
 project1Routes.get('/signup', authControllers.getSignup);
-project1Routes.post('/signup', authControllers.postSignup);
+project1Routes.post('/signup', [check('email')
+    .isEmail().withMessage('Please enter a valid email')
+    .custom((value, { req }) => {
+        return User.findOne({ email: value })
+            .then(userDoc => {
+                if (userDoc) {
+                    return Promise.reject('Email already exists, please pick a different one');
+                }
+            });
+    }),
+    body('password', 'Please enter a password with only numbers and text, and at least 4 characters long').isLength({ min: 4 }).isAlphanumeric(),
+    body('confirmPassword').custom((value, { req }) => {
+        if (value !== req.body.password) {
+            throw new Error('Passwords have to match!')
+        }
+        return true;
+    })
+], authControllers.postSignup);
 project1Routes.get('/login', authControllers.getLogin);
-project1Routes.post('/login', authControllers.postLogin);
+project1Routes.post('/login', [
+    body('email').isEmail().withMessage('Please enter a valid email'),
+    body('password', 'Please enter a password with only numbers and text, and at least 4 characters long').isLength({ min: 4 }).isAlphanumeric()
+], authControllers.postLogin);
 project1Routes.post('/logout', authControllers.postLogout);
 project1Routes.get('/reset', authControllers.getReset);
 project1Routes.post('/reset', authControllers.postReset);
