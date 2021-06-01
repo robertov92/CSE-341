@@ -34,10 +34,15 @@ exports.getProduct = (req, res, next) => {
                 pageTitle: product.title
             });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            // this is a database fail becase the product isn't found,
+            // though I am sending the user to 404 because it seems to him that the page isn' found
+            res.redirect('/project1/404');
+        });
 };
 
-// gets card page
+// gets cart page
 exports.getCart = (req, res, next) => {
     req.user
         .populate('cart.items.productId')
@@ -49,7 +54,10 @@ exports.getCart = (req, res, next) => {
                 products: products
             });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            res.redirect('/project1/500');
+        });
 };
 
 // adds product to cart
@@ -64,6 +72,7 @@ exports.postCart = (req, res, next) => {
         })
         .catch(err => {
             console.log(err);
+            res.redirect('/project1/500');
         });
 };
 
@@ -75,7 +84,10 @@ exports.postCartDeleteProduct = (req, res, next) => {
         .then(result => {
             res.redirect('/project1/cart');
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            res.redirect('/project1/500');
+        });
 };
 
 // saves cart into order collection
@@ -102,7 +114,10 @@ exports.postOrder = (req, res, next) => {
         .then(() => {
             res.redirect('/project1/orders');
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            res.redirect('/project1/500');
+        });
 };
 
 // gets orders to be displayed
@@ -114,5 +129,8 @@ exports.getOrders = (req, res, next) => {
                 orders: orders
             });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            res.redirect('/project1/500');
+        });
 };

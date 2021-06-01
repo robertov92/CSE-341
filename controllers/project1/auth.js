@@ -59,6 +59,7 @@ exports.postSignup = (req, res, next) => {
 
         }).catch(err => {
             console.log(err);
+            res.redirect('/project1/500');
         });
 };
 
@@ -116,7 +117,10 @@ exports.postLogin = (req, res, next) => {
                     res.redirect('/project1/login');
                 });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            res.redirect('/project1/500');
+        });
 };
 
 exports.postLogout = (req, res, next) => {
@@ -163,7 +167,8 @@ exports.postReset = (req, res, next) => {
             })
             .catch(err => {
                 console.log(err);
-            })
+                res.redirect('/project1/500');
+            });
     });
 }
 
@@ -180,6 +185,7 @@ exports.getNewPassword = (req, res, next) => {
         })
         .catch(err => {
             console.log(err);
+            res.redirect('/project1/500');
         });
 
 }
@@ -213,5 +219,6 @@ exports.postNewPassword = (req, res, next) => {
         })
         .catch(err => {
             console.log(err);
+            res.redirect('/project1/500');
         });
 };

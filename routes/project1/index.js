@@ -69,8 +69,24 @@ project1Routes.post('/cart', isAuth, shopControllers.postCart);
 project1Routes.post('/cart-delete-item', shopControllers.postCartDeleteProduct);
 project1Routes.post('/create-order', isAuth, shopControllers.postOrder);
 project1Routes.get('/orders', isAuth, shopControllers.getOrders);
-project1Routes.get('/:productId', shopControllers.getProduct);
+project1Routes.get('/catalog/:productId', shopControllers.getProduct);
 project1Routes.get('/', shopControllers.getIndex);
+
+
+
+
+// errors
+project1Routes.get('/500', (req, res, next) => {
+    res.render('pages/project1/500', {
+        pageTitle: 'Error!'
+    });
+});
+
+project1Routes.use((req, res, next) => {
+    res.render('pages/project1/404', {
+        pageTitle: 'Page not found'
+    });
+});
 
 
 

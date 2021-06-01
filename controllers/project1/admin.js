@@ -10,7 +10,10 @@ exports.getAdminProds = (req, res, next) => {
                 pageTitle: 'Admin Products'
             });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            res.redirect('/project1/500');
+        });
 };
 
 // gets 'Add Product' page
@@ -58,6 +61,7 @@ exports.postAddProduct = (req, res, next) => {
         })
         .catch(err => {
             console.log(err);
+            res.redirect('/project1/500');
         });
 };
 
@@ -68,7 +72,10 @@ exports.postDeleteProduct = (req, res, next) => {
         .then(() => {
             res.redirect('/project1/adminProds');
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            res.redirect('/project1/500');
+        });
 };
 
 // gets and populates edit page (which is also the add page)
@@ -92,7 +99,10 @@ exports.getEditProduct = (req, res, next) => {
                 validationErrors: []
             });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            res.redirect('/project1/500');
+        });
 };
 
 // edits a product in database
@@ -109,7 +119,7 @@ exports.postEditProduct = (req, res, next) => {
             pageTitle: 'Edit Product',
             editing: true,
             hasError: true,
-            product: { title: updatedTitle, imageUrl: updatedImageUrl, price: updatedPrice, description: updatedDesc, _id:prodId },
+            product: { title: updatedTitle, imageUrl: updatedImageUrl, price: updatedPrice, description: updatedDesc, _id: prodId },
             errorMessage: errors.array()[0].msg,
             validationErrors: errors.array()
         });
@@ -128,6 +138,8 @@ exports.postEditProduct = (req, res, next) => {
                 res.redirect('/project1/adminProds');
             });
         })
-
-    .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            res.redirect('/project1/500');
+        });
 };
