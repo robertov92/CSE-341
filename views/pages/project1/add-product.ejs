@@ -1,10 +1,30 @@
 <%- include('includes/header.ejs') %> 
 <h1><% if (editing) { %>Edit<% } else { %>Add<% } %> Product</h1>
 <form id="add-product" action="/project1/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST">
-   <label>Title<br><input type="text" name="title" value="<% if (editing) { %><%= product.title %><% } %>"></label><br>
-   <label>Image URL<br><input type="url" name="imageUrl" value="<% if (editing) { %><%= product.imageUrl %><% } %>"></label><br>
-   <label>Price<br><input type="text" name="price" value="<% if (editing) { %><%= product.price %><% } %>"></label><br>
-   <label>Description<br><textarea rows="5" name="description"><% if (editing) { %><%= product.description %><% } %></textarea></label><br>
+   <% if (errorMessage) { %> 
+      <div>
+         <%= errorMessage %> 
+      </div>
+   <% } %> 
+   <label>Title<br>
+      <input class="<%= validationErrors.find(e=>e.param === 'title') ? 'invalid' : '' %>"  
+      type="text" name="title" 
+      value="<% if (editing || hasError) { %><%= product.title %><% } %>">
+   </label><br>
+   <label>Image URL<br>
+      <input class="<%= validationErrors.find(e=>e.param === 'imageUrl') ? 'invalid' : '' %>" 
+      type="url" name="imageUrl" 
+      value="<% if (editing || hasError) { %><%= product.imageUrl %><% } %>">
+   </label><br>
+   <label>Price<br>
+      <input class="<%= validationErrors.find(e=>e.param === 'price') ? 'invalid' : '' %>"  
+      type="text" name="price" 
+      value="<% if (editing || hasError) { %><%= product.price %><% } %>">
+   </label><br>
+   <label>Description<br>
+      <textarea rows="5" name="description" 
+      class="<%= validationErrors.find(e=>e.param === 'description') ? 'invalid' : '' %>"><% if (editing || hasError) { %><%= product.description %><% } %></textarea>
+   </label><br>
    <% if (editing) { %>
       <input type="hidden" value="<%= product._id %>" name="productId">
    <% } %>
