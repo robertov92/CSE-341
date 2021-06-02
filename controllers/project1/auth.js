@@ -107,7 +107,7 @@ exports.postLogin = (req, res, next) => {
                     }
                     return res.status(422).render('pages/project1/login', {
                         pageTitle: 'Login',
-                        errorMessage: 'Invalid email',
+                        errorMessage: 'Invalid password',
                         oldInput: { email: email, password: password },
                         validationErrors: []
                     });

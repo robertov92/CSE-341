@@ -7,7 +7,7 @@ exports.getIndex = (req, res, next) => {
         .then(products => {
             res.render('pages/project1', {
                 prods: products,
-                pageTitle: 'GuitarJS'
+                pageTitle: 'Guitar+'
             });
         });
 };
