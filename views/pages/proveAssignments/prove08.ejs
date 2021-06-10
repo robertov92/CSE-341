@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prove 08</title>
+    <link rel="stylesheet" href="/stylesheets/ta03.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1><%= title %></h1>
+  </div>
+
+  <div class="container1">
+    <% for(let item of data) { %> 
+      <article class="item">
+        <h2><%= item.name %></h2>
+        <img src="<%= item.imageUrl %>" alt="<%= item.name %>">
+        <h3>$<%= item.price %></h3>
+        <p><%= item.description %></p>
+      </article>
+    <% } %>
+  </div>
+  
+  <form>
+    <% for(var i = 1; i <= numPages; i++) { %>
+    <a href="?page=<%= i %><%= (searchedValue) ? `&searchValue=${searchedValue}` :  "" %>" class="<%= (page==i) ? 'btn-primary' : 'btn-default' %>"><%= i %></a>
+    <% } %>
+  </form>
+  
+</body>
+</html>
+  

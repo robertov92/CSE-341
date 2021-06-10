@@ -10,18 +10,21 @@
 <div class="jumbotron text-center">
   <div class="container">
     <h1><%= title %></h1>
-    <p>This is the placeholder for Team Activity 03</p>
   </div>
 </div>
 <div class="container1">
   <% for(let item of body) { %> 
-    <div class="item">
+    <article class="item">
       <h2><%= item.name %></h2>
       <img src="<%= item.imageUrl %>" alt="<%= item.name %>">
-      <h3><%= item.price %></h3>
+      <h3>$<%= item.price %></h3>
       <p><%= item.description %></p>
-    </div>
+    </article>
   <% } %>
+</div>
+<div class="pagination">
+  <a href="/ta/03/?page=1">1</a>
+  <a href="/ta/03/?page=2">2</a>
 </div>
 
 

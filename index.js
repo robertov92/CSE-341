@@ -22,6 +22,7 @@ app.use((req, res, next) => {
 });
 
 const project1 = require('./routes/project1');
+const proveAssignments = require('./routes/proveAssignments');
 const teamActivities = require('./routes/teamActivities');
 
 const User = require('./models/project1/user');
@@ -51,6 +52,7 @@ app.use(express.static(path.join(__dirname, 'public')))
     .use(bodyParser({ extended: false }))
     .use('/project1', project1)
     .use('/ta', teamActivities)
+    .use('/prove', proveAssignments)
     .get('/', (req, res, next) => {
         res.render('pages/index', { title: 'Welcome to my CSE341 repo', path: '/' });
     })
