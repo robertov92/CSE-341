@@ -25,7 +25,6 @@ const renderIndex = (req, res, json) => {
 }
 
 exports.processJson = (req, res, next) => {
-    // read json
     var url = 'https://byui-cse.github.io/cse341-course/lesson03/items.json'
 
     https
@@ -38,7 +37,6 @@ exports.processJson = (req, res, next) => {
 
             response.on('end', function() {
                 global.jsonResponse = JSON.parse(body)
-
                 renderIndex(req, res, global.jsonResponse)
             })
         })
