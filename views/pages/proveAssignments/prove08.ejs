@@ -24,11 +24,28 @@
     <% } %>
   </div>
   
-  <form>
-    <% for(var i = 1; i <= numPages; i++) { %>
-    <a href="?page=<%= i %><%= (searchedValue) ? `&searchValue=${searchedValue}` :  "" %>" class="<%= (page==i) ? 'btn-primary' : 'btn-default' %>"><%= i %></a>
-    <% } %>
-  </form>
+  
+  <!-- <% for(var i = 1; i <= numPages; i++) { %>
+  <a href="?page=<%= i %><%= (searchedValue) ? `&searchValue=${searchedValue}` :  "" %>" class="<%= (page==i) ? 'btn-primary' : 'btn-default' %>"><%= i %></a>
+  <% } %> -->
+
+<div class="pagination">
+  <% if (page!=1) { %>
+    <a href="?page=1">First</a>
+    <a href="?page=<%= page - 1 %>">← Previous</a>
+    <a href="?page=<%= page - 1 %>"><%= page - 1 %></a> 
+  <% } %>
+    
+  <a class="current" href="?page=<%= (searchedValue) ? `&searchValue=${searchedValue}` :  page %>"><%= (searchedValue) ? `&searchValue=${searchedValue}` :  page %></a>
+
+  <% if (page!=numPages) { %> 
+    <a href="?page=<%= parseInt(page) + 1 %>"><%= parseInt(page) + 1 %></a> 
+      <% if (page!=(numPages-1)) { %><%= "...   " + numPages %> <% } %> 
+    <a href="?page=<%= parseInt(page) + 1 %>">Next →</a>
+    <a href="?page=<%= numPages %> ">Last</a>
+  <% } %> 
+</div>
+  
   
 </body>
 </html>

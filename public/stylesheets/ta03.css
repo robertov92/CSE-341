@@ -35,27 +35,25 @@ img {
     text-align: center;
 }
 
-form {
+.pagination {
     text-align: center;
-    margin: 40px;
+    margin: 60px 0;
 }
 
-form a {
+.pagination a {
     color: rgb(44, 44, 44);
     background-color: rgb(231, 231, 231);
-    padding: 5px 7px;
+    padding: 10px 15px;
     margin: 0 5px;
     border-radius: 3px;
     text-decoration: none;
-    transform: .5s;
 }
 
-form a:hover {
-    color: aliceblue;
-    background-color: rgb(44, 44, 44);
+.pagination a:hover {
+    background-color: rgb(165, 165, 165);
 }
 
-.btn-primary {
+.pagination .current {
     background-color: rgb(44, 44, 44);
-    color: aliceblue;
+    color: white;
 }
