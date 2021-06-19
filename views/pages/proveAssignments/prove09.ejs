@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prove 09</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-blue-100 text-gray-800">
+
+    <div class="container mx-auto">
+        <h1 class="text-center m-5 text-4xl font-bold">Pokemon API</h1>
+    
+        <!-- Add these classes if you include images grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 justify-items-center -->
+        <div class="my-7 capitalize text-center">
+            <% for (let i = 0; i < pokemons.length ; i++) { %>
+        
+               <p><%= pokemons[i].name %></p>
+               
+            <%  }  %>
+        </div>
+    
+        <div class="container mx-auto flex justify-center">
+            <% if (page > 0) { %> 
+                <a class="m-1 bg-blue-500 text-white font-bold px-4 py-2 rounded" href="/prove/prove09/0">First</a>
+                <a class="m-1 bg-blue-500 text-white font-bold px-4 py-2 rounded" href="/prove/prove09/<%= parseInt(page) - 10 %>">Previous</a> 
+            <% } %> 
+        
+            <a class="m-1 bg-blue-500 text-white font-bold px-4 py-2 rounded" href="/prove/prove09/<%= parseInt(page) %>"><%= (parseInt(page) / 10) + 1 %></a>
+        
+            <% if (page < 1110) { %>
+                <a class="m-1 bg-blue-500 text-white font-bold px-4 py-2 rounded" href="/prove/prove09/<%= parseInt(page) + 10 %>">Next</a> 
+                <a class="m-1 bg-blue-500 text-white font-bold px-4 py-2 rounded" href="/prove/prove09/1110">Last</a> 
+            <% } %> 
+        </div>
+    </div>
+</body>
+
+</html>
