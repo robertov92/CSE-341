@@ -14,9 +14,8 @@ proveRoutes.get('/prove09', prove09.getPokemons)
     .get('/prove09/:page', prove09.getPokemonsPage);
 
 // Prove10
-proveRoutes.get('/prove10', prove10.getIndex)
-    .get('/prove10/fetchAll', prove10.fetchAll)
-    .post('/prove10/insert', prove10.insert);
-
+proveRoutes.get('/prove10', prove10.corsAuthorization, prove10.getIndex)
+    .get('/prove10/fetchAll', prove10.corsAuthorization, prove10.fetchAll)
+    .post('/prove10/insert', prove10.corsAuthorization, prove10.insert);
 
 module.exports = proveRoutes;

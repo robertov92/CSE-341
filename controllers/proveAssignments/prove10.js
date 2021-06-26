@@ -27,3 +27,12 @@ exports.insert = (req, res, next) => {
         res.sendStatus(400);
     }
 }
+
+
+// These authorizations allow other applications to access my data from other ports
+exports.corsAuthorization = (req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+};
