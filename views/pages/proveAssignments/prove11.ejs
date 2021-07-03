@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../../includes/header.ejs %>
+</head>
+
+<body>
+  <% include ../../includes/nav.ejs %>
+<div class="jumbotron text-center">
+  <div class="container">
+    <h1>Prove 11</h1>
+    <h2>Working with Socket.io</h2>
+  </div>
+</div>
+<div class="container">
+  <h2>Names:</h2>
+  <ul id="nameList"></ul>
+  
+  <h2>Submit a name</h2>
+    <div class="actions_container">
+        <input type="text" id="newName">
+        <button id="submitName">Submit</button>
+    </div>
+    
+    
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/scripts/prove11.js"></script>
+</body>
+</html>

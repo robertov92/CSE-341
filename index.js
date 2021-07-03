@@ -79,8 +79,18 @@ mongoose
     .connect(
         MONGODB_URI
     )
-    .then(result => {
-        app.listen(PORT);
+    .then(() => {
+        // save app to a constant
+        const server = app.listen(PORT);
+        // initialize socket.io on server-side (using server constant)
+        const io = require('socket.io')(server);
+        // io.on connection, do something
+        io.on('connection', socket => {
+            // you can create events using socket.on()
+            socket.on('new-name', () => {
+                socket.broadcast.emit('update-list');
+            });
+        });
     })
     .catch(err => {
         console.log(err);
